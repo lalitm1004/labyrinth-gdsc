@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model UserProfile {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(dbgenerated("now()")) @map("created_at")
+  //
+  vote      Vote?
+
+  @@map("userprofile")
+}
+
+model Movie {
+  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name  String @unique
+  //
+  votes Vote[]
+
+  @@map("movie")
+}
+
+model Vote {
+  userId    String      @unique @map("user_id") @db.Uuid
+  movieId   String      @map("movie_id") @db.Uuid
+  createdAt DateTime    @default(dbgenerated("now()")) @map("created_at")
+  //
+  user      UserProfile @relation(fields: [userId], references: [id])
+  movie     Movie       @relation(fields: [movieId], references: [id])
+
+  @@id([userId, movieId])
+  @@map("vote")
+}
