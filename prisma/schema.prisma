@@ -26,10 +26,11 @@ model UserProfile {
 }
 
 model Movie {
-  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name  String @unique
+  id              String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String  @unique
+  thumbnailSource String? @map("thumbnail_source")
   //
-  votes Vote[]
+  votes           Vote[]
 
   @@map("movie")
 }
