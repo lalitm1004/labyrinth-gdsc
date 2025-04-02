@@ -1,7 +1,6 @@
 <script lang="ts">
-
     let { data } = $props();
-    let { supabase, user } = $derived(data);
+    let { supabase, session, user } = $derived(data);
 
     const handleSignIn = async () => {
         await supabase.auth.signInWithOAuth({
@@ -15,21 +14,10 @@
             }
         });
     }
+
+    const handleSignOut = async () => {
+        await supabase.auth.signOut();
+    }
 </script>
 
-<div>
-    <div>
-        {user?.email}
-    </div>
-    <button onclick={handleSignIn} class={`bg-neutral-700`}>
-        Sign In Vro
-    </button>
-
-    <button onclick={async () => {
-        await supabase.auth.signOut();
-    }}
-        class={`bg-neutral-700`}
-    >
-        Sign Out Vro
-    </button>
-</div>
+TODO

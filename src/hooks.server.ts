@@ -59,7 +59,7 @@ const createSupabase: Handle = async ({ event, resolve }) => {
 
 const authGuard: Handle = async ({ event, resolve }) => {
     const currentPath = event.url.pathname;
-    const shouldRedirect = sensitiveRoutes.some(route => 
+    const shouldRedirect = sensitiveRoutes.some(route =>
         currentPath === route || currentPath.startsWith(`${route}/`)
     );
 
@@ -71,7 +71,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
             }
         });
     }
-    
+
     return resolve(event);
 }
 
