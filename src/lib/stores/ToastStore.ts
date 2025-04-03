@@ -14,11 +14,12 @@ export const addToast = (toast: IToast) => {
     const id = nanoid();
 
     ToastStore.update(all => {
-        if (all.length > 0) {
-            dismissToast(all[0].id!);
-            return [...all];
-        }
-        return [{ ...toast, id: id }, ...all];
+        all.forEach(existingToast => {
+            if (existingToast.id) {
+                dismissToast(existingToast.id);
+            }
+        });
+        return [{ ...toast, id: id }];
     });
     if (toast.timeout) setTimeout(() => dismissToast(id), toast.timeout);
     else setTimeout(() => dismissToast(id), 5000);
