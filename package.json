@@ -13,7 +13,7 @@
 		"seed": "npx prisma db seed"
 	},
 	"prisma": {
-		"seed": "npx tsx prisma/seed.ts"	
+		"seed": "npx tsx prisma/seed.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^4.0.0",
