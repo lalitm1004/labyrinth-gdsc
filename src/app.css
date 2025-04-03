@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+
+@font-face {
+    font-family: 'Alpino';
+    font-style: normal;
+    src:
+        url('/assets/fonts/Alpino-Variable.woff2') format('woff2'),
+        url('/assets/fonts/Alpino-Variable.woff') format('woff'),
+        url('/assets/fonts/Alpino-Variable.ttf') format('truetype'),;
+}
+
+@theme {
+    --font-alpino: 'Alpino', sans-serif;
+    --font-gidole: 'Gidole', sans-serif;
+}

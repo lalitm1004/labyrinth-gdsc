@@ -40,7 +40,7 @@ async function seedMovie() {
     await prisma.$executeRawUnsafe(`DELETE FROM public.Movie`);
 
     const movies = [
-        { name: 'Scott Pilgrim', thumbnailSource: '' },
+        { name: 'Scott Pilgrim vs. the World', thumbnailSource: 'https://m.media-amazon.com/images/M/MV5BNTA5ZWMwNmYtNWI1ZS00NDRlLTkxNzktMzdhZDU2ZDhjNDJmXkEyXkFqcGc@._V1_FMjpg_UX1140_.jpg' },
         { name: 'Nadaaniya', thumbnailSource: '' },
         { name: 'MazeRunner', thumbnailSource: '' },
     ];
