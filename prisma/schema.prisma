@@ -21,7 +21,7 @@ model UserProfile {
   createdAt DateTime @default(dbgenerated("now()")) @map("created_at")
   //
   vote      Vote?
-  shame     Shame?
+  shame     Shame[]
 
   @@map("userprofile")
 }
@@ -49,7 +49,8 @@ model Vote {
 }
 
 model Shame {
-  userId    String      @id @map("user_id") @db.Uuid
+  id String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  userId    String      @map("user_id") @db.Uuid
   reason    String?
   createdAt DateTime    @default(dbgenerated("now()")) @map("created_at")
   //
