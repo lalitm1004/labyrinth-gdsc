@@ -1,4 +1,4 @@
-import { getAllMovies } from "$lib/server/database/movie";
+import { getAllMovies } from "$lib/server/database/movie.db";
 import type { PageServerLoad } from "./$types";
 
 // @ts-ignore

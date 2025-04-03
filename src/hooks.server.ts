@@ -59,6 +59,15 @@ const createSupabase: Handle = async ({ event, resolve }) => {
 
 const authGuard: Handle = async ({ event, resolve }) => {
     const currentPath = event.url.pathname;
+
+    if (currentPath.startsWith('/api')) {
+        return resolve(event);
+    }
+
+    if (currentPath !== '/' &&  (!event.locals.session || !event.locals.user)) {
+        return redirect(301, '/')
+    }
+
     const shouldRedirect = sensitiveRoutes.some(route =>
         currentPath === route || currentPath.startsWith(`${route}/`)
     );
