@@ -30,6 +30,7 @@
 	"dependencies": {
 		"@prisma/client": "^6.5.0",
 		"@supabase/ssr": "^0.6.1",
-		"@supabase/supabase-js": "^2.49.4"
+		"@supabase/supabase-js": "^2.49.4",
+		"nanoid": "^5.1.5"
 	}
 }

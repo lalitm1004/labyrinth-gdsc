@@ -5,6 +5,8 @@
     import { SupaStore, UserStore } from '$lib/stores/SupaStore';
     import { PUBLIC_ENV } from '$env/static/public';
     import SessionPanel from '$lib/components/SessionPanel.svelte';
+    import { addToast, ToastStore } from '$lib/stores/ToastStore';
+    import Toast from '$lib/components/Toast.svelte';
 
 	let { data, children } = $props();
 	let { supabase, session, user } = $derived(data);
@@ -24,6 +26,11 @@
 		SupaStore.set(supabase);
 		UserStore.set(user);
 
+		// addToast({
+		// 	message: 'Successfully voted for "Scott Pilgrim vs. the World"',
+		// 	type: 'success'
+		// })
+
 		return () => subscription.unsubscribe();
 	})
 </script>
@@ -32,4 +39,10 @@
 {#if PUBLIC_ENV === 'development'}
 	
 	<SessionPanel />
+{/if}
+
+{#if $ToastStore}
+    {#each $ToastStore as toast (toast.id)}
+        <Toast {...toast} />
+    {/each}
 {/if}
