@@ -15,9 +15,9 @@
         });
     }
 
-    // const handleSignOut = async () => {
-    //     await supabase.auth.signOut();
-    // }
+    const handleVote = async (id: string) => {
+        alert(id)
+    }
 </script>
 
 <main class={`h-dvh w-dvw flex flex-col items-center pt-16`}>
@@ -30,14 +30,16 @@
             Vote for your favorite film to be the theme for this years labyrinth!
         </p>
     </hgroup>
-    
+
     {#if session}
         <div class={`flex md:flex-row flex-col items-center gap-2`}>
             {#each movies as movie (movie.id)}
-                <figure class={`bg-blue-400 flex flex-col gap-1 px-2 py-2 rounded-sm text-center`}>
-                    <img class={`w-[200px] aspect-auto rounded-sm`} src={movie.thumbnailSource} alt={`${movie.name} poster`}/>
-                    <figcaption>{movie.name}</figcaption>
-                </figure>
+                <button onclick={() => handleVote(movie.id)} class={`cursor-pointer`}>
+                    <figure class={`bg-blue-400 flex flex-col gap-1 px-2 py-2 rounded-sm text-center`}>
+                        <img class={`md:h-[300px] md:w-auto w-[200px] aspect-auto rounded-sm`} src={movie.thumbnailSource} alt={`${movie.name} poster`} fetchpriority={`high`}>
+                        <figcaption>{movie.name}</figcaption>
+                    </figure>
+                </button>
             {/each}
         </div>
     {:else}
