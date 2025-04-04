@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { addToast } from '$lib/stores/ToastStore.js';
+
     let { data } = $props();
-    let { supabase, session, user, movies } = $derived(data);
+    let { supabase, session, user, movies, votes } = $derived(data);
 
     const handleSignIn = async () => {
         await supabase.auth.signInWithOAuth({
@@ -15,8 +17,40 @@
         });
     }
 
-    const handleVote = async (id: string) => {
-        alert(id)
+    const handleVote = async (movieId: string) => {
+        const response = await fetch('/api/vote', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user?.id, movieId }),
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            addToast({
+                message: `Successfully voted for "${movies.find(m => m.id === movieId)?.name}"`,
+                type: 'success',
+            });
+            return;
+        }
+
+        if (data.message === 'P2002') {
+            addToast({
+                message: 'You have already submitted a vote.',
+                type: 'warning',
+            })
+            return;
+        }
+
+        addToast({
+            message: 'An unexpected error has occured. Please contact the administrator',
+            type: 'danger',
+        });
+    }
+
+    const getVoteCount = (moveId: string): string => {
+        const voteEntry = votes.get(moveId)
+        const count = voteEntry ? voteEntry.voteCount : 0;
+        return count.toString().padStart(5, '0')
     }
 </script>
 
@@ -37,7 +71,7 @@
                 <button onclick={() => handleVote(movie.id)} class={`cursor-pointer`}>
                     <figure class={`bg-blue-400 flex flex-col gap-1 px-2 py-2 rounded-sm text-center`}>
                         <img class={`md:h-[300px] md:w-auto w-[200px] aspect-auto rounded-sm`} src={movie.thumbnailSource} alt={`${movie.name} poster`} fetchpriority={`high`}>
-                        <figcaption>{movie.name}</figcaption>
+                        <figcaption>{movie.name} | {getVoteCount(movie.id)}</figcaption>
                     </figure>
                 </button>
             {/each}

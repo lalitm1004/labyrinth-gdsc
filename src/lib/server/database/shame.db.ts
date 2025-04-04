@@ -40,3 +40,12 @@ export const getShameEntries = async (): Promise<Map<string, IShameEntry>> => {
 
     return shameCount;
 }
+
+export const insertShameEntry = async (userId: string, reason: string) => {
+    return await db.shame.create({
+        data: {
+            userId,
+            reason,
+        }
+    })
+}

@@ -41,8 +41,8 @@ async function seedMovie() {
 
     const movies = [
         { name: 'Scott Pilgrim vs. the World', thumbnailSource: 'https://m.media-amazon.com/images/M/MV5BNTA5ZWMwNmYtNWI1ZS00NDRlLTkxNzktMzdhZDU2ZDhjNDJmXkEyXkFqcGc@._V1_FMjpg_UX1140_.jpg' },
-        { name: 'Nadaaniya', thumbnailSource: '' },
-        { name: 'MazeRunner', thumbnailSource: '' },
+        { name: 'Nadaaniyan', thumbnailSource: 'https://m.media-amazon.com/images/M/MV5BNDRkNWM0NTQtZmIyNy00MzZmLWI4OTktNzM0NTMzMGJiYzUyXkEyXkFqcGc@._V1_FMjpg_UY2048_.jpg' },
+        { name: 'The Maze Runner', thumbnailSource: 'https://m.media-amazon.com/images/M/MV5BMjUyNTA3MTAyM15BMl5BanBnXkFtZTgwOTEyMTkyMjE@._V1_FMjpg_UX500_.jpg' },
     ];
 
     await prisma.movie.createMany({
