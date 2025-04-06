@@ -32,8 +32,18 @@ model Movie {
   thumbnailSource String? @map("thumbnail_source")
   //
   votes           Vote[]
+  multiplier      MovieMultiplier?
 
   @@map("movie")
+}
+
+model MovieMultiplier {
+  movieId String @id @db.Uuid
+  voteMultiplier Int @default(1) @map("vote_multiplier")
+  //
+  movie Movie @relation(fields: [movieId], references: [id])
+
+  @@map("moviemultiplier")
 }
 
 model Vote {
@@ -49,7 +59,7 @@ model Vote {
 }
 
 model Shame {
-  id String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId    String      @map("user_id") @db.Uuid
   reason    String?
   createdAt DateTime    @default(dbgenerated("now()")) @map("created_at")
