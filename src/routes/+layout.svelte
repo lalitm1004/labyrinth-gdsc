@@ -7,6 +7,7 @@
     import Toast from '$lib/components/Toast.svelte';
     import { LoadingStore } from '$lib/stores/LoadingStore';
     import ScreenBlur from '$lib/components/ScreenBlur.svelte';
+    import { setDevice } from '$lib/stores/DeviceStore';
 
 	let { data, children } = $props();
 	let { supabase, session, user } = $derived(data);
@@ -26,9 +27,15 @@
 		SupaStore.set(supabase);
 		UserStore.set(user);
 
+		if (window.matchMedia('(max-width: 767px)').matches) setDevice('mobile');
+        else setDevice('desktop');
+
 		return () => subscription.unsubscribe();
 	})
 </script>
+
+<!-- handle device on resize -->
+<svelte:window onresize={() => setDevice(window.matchMedia('(max-width: 767px').matches ? 'mobile' : 'desktop')}/>
 
 {@render children()}
 

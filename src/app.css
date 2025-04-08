@@ -9,7 +9,14 @@
         url('/assets/fonts/Alpino-Variable.ttf') format('truetype'),;
 }
 
+@font-face {
+    font-family: 'GothamBlack';
+    font-style: normal;
+    src: url('/assets/fonts/Gotham-Black-Regular.ttf') format('truetype');
+}
+
 @theme {
     --font-alpino: 'Alpino', sans-serif;
     --font-gidole: 'Gidole', sans-serif;
+    --font-gotham: 'GothamBlack', sans-serif;
 }

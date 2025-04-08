@@ -1,5 +1,6 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/public";
 import { sensitiveRoutes } from "$lib/data/sensitiveRoutes";
+import { TOKEN_NAME } from "$lib/stores/DeviceStore";
 import { createServerClient } from "@supabase/ssr";
 
 import { redirect, type Handle } from "@sveltejs/kit";
@@ -84,4 +85,35 @@ const authGuard: Handle = async ({ event, resolve }) => {
     return resolve(event);
 }
 
-export const handle: Handle = sequence(createSupabase, authGuard)
+const handleDevice: Handle = async({ event, resolve }) => {
+    const response = await resolve(event, {
+        transformPageChunk: ({ html }) => {
+            const maxAge = 365 * 24 * 60 * 60;
+
+            let currentDevice = event.cookies.get(TOKEN_NAME);
+            if (!currentDevice) {
+                const userOnMobile = event.request.headers.get('sec-ch-ua-mobile') === '?1';
+                currentDevice = userOnMobile ? 'mobile' : 'desktop';
+
+                event.cookies.set(TOKEN_NAME, currentDevice, {
+                    path: '/',
+                    expires: new Date(Date.now() + maxAge),
+                    maxAge,
+                    httpOnly: false,
+                    sameSite: 'strict',
+                })
+            }
+
+            return html
+                .replace('data-device=""', `data-device="${currentDevice}"`)
+        }
+    })
+
+    response.headers.set('Accept-CH', 'Sec-CH-UA-Mobile');
+    response.headers.set('Vary', 'Sec-CH-UA-Mobile');
+    response.headers.set('Critical-CH', 'Sec-CH-UA-Mobile');
+
+    return response;
+}
+
+export const handle: Handle = sequence(createSupabase, handleDevice)

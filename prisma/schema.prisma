@@ -27,9 +27,10 @@ model UserProfile {
 }
 
 model Movie {
-  id              String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name            String  @unique
-  thumbnailSource String? @map("thumbnail_source")
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String           @unique
+  thumbnailSource String?          @map("thumbnail_source")
+  homeField       Boolean          @default(false) @map("home_field")
   //
   votes           Vote[]
   multiplier      MovieMultiplier?
@@ -38,10 +39,10 @@ model Movie {
 }
 
 model MovieMultiplier {
-  movieId String @id @db.Uuid
-  voteMultiplier Int @default(1) @map("vote_multiplier")
+  movieId        String @id @db.Uuid
+  voteMultiplier Int    @default(1) @map("vote_multiplier")
   //
-  movie Movie @relation(fields: [movieId], references: [id])
+  movie          Movie  @relation(fields: [movieId], references: [id])
 
   @@map("moviemultiplier")
 }
