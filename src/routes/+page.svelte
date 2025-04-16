@@ -248,7 +248,7 @@
 {/if}
 
 <svelte:head>
-    <title>Labyrinth Voting </title>
+    <title>Labyrinth'25 Voting</title>
 </svelte:head>
 
 <style>
