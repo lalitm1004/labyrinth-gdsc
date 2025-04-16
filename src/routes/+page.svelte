@@ -20,7 +20,7 @@
         MultiplierStore.set(multipliers);
         VoteStore.set(votes);
 
-        const voteRefreshInterval = setInterval(refreshVotes, 5000)
+        const voteRefreshInterval = setInterval(refreshVotes, 10000)
 
         const multiplierSubscription = supabase
             .channel('multiplier_channel')
