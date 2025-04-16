@@ -173,12 +173,12 @@
                 <img class={`absolute fade-in bottom-0 left-0 t/ranslate-y-[50%]`} src={`/assets/images/stars.png`} alt={`star margin`}/>
             </div>
 
-            <div class={`relative h-[100vh] w-dvw bg-gradient-to-b from-[#212139] to-neutral-950 flex flex-col pt-24 gap-12`}>
+            <div class={`relative h-[100vh] w-dvw bg-gradient-to-b from-[#212139] to-neutral-950 flex flex-col pt-24 gap-8`}>
                 <hgroup class={`z-20 text-center font-alpino font-black text-white`}>
                     <h2 class={`text-7xl text-pink-300`}>Pick your choice!</h2>
                 </hgroup>
 
-                <div class={`w-full flex flex-col items-center gap-4`}>
+                <div class={`w-full flex flex-col items-center gap-4 pb-2`}>
                     {#each movies as  movie (movie.id)}
                         <button onclick={() => openConfirmationModal(movie.id)} class={`relative z-20 bg-white w-[90%] flex flex-col items-center gap-2 py-4 rounded-lg`}>
                             <p class={`font-gotham text-xl`}>{movie.name}</p>
