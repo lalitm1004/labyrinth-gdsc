@@ -162,10 +162,10 @@
                 <div class={`text-white w-full flex flex-col gap-4`}>
                     <span class={`w-full flex`}>
                         <span class={`flex-grow`}></span>
-                        <img class={`w-[65%] aspect-auto fade-in`} src={`/assets/images/girl.png`} alt={`Ramona Flowers`}/>
+                        <img fetchpriority={`high`} class={`w-[65%] aspect-auto fade-in`} src={`/assets/images/girl.png`} alt={`Ramona Flowers`}/>
                     </span>
                     <span>
-                        <img class={`w-[65%] aspect-auto fade-in`} src={`/assets/images/scott.png`} alt={`Scott Pilgrim`}/>
+                        <img fetchpriority={`high`} class={`w-[65%] aspect-auto fade-in`} src={`/assets/images/scott.png`} alt={`Scott Pilgrim`}/>
                         <span class={`flex-grow`}></span>
                     </span>
                 </div>
