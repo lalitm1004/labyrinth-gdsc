@@ -1,5 +1,4 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/public";
-import { sensitiveRoutes } from "$lib/data/sensitiveRoutes";
 import { TOKEN_NAME } from "$lib/stores/DeviceStore";
 import { createServerClient } from "@supabase/ssr";
 
@@ -65,21 +64,9 @@ const authGuard: Handle = async ({ event, resolve }) => {
         return resolve(event);
     }
 
-    if (currentPath !== '/' &&  (!event.locals.session || !event.locals.user)) {
-        return redirect(301, '/')
-    }
-
-    const shouldRedirect = sensitiveRoutes.some(route =>
-        currentPath === route || currentPath.startsWith(`${route}/`)
-    );
-
-    if (shouldRedirect) {
-        return new Response(null, {
-            status: 302,
-            headers: {
-                location: 'https://www.youtube.com/watch?v=8pJZ9dWvxyA'
-            }
-        });
+    if (!event.locals.user && currentPath !== '/signin') {
+        console.log('sex')
+        return redirect(301, '/signin')
     }
 
     return resolve(event);
@@ -116,4 +103,4 @@ const handleDevice: Handle = async({ event, resolve }) => {
     return response;
 }
 
-export const handle: Handle = sequence(createSupabase, handleDevice)
+export const handle: Handle = sequence(createSupabase, authGuard, handleDevice)

@@ -145,26 +145,13 @@
         isModalOpen = false;
         document.body.style.overflow = 'auto';
     }
-
-    const handleSignIn = async () => {
-        await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: `${window.location.origin}/api/auth/callback`,
-                queryParams: {
-                    access_type: 'offline',
-                    prompt: 'consent',
-                },
-            }
-        });
-    }
 </script>
 
 {#if isPageLoaded}
 {#if $device === 'mobile'}
     <main class={`h-dvh overflow-x-hidden overflow-y-scroll`}>
             <div class={`relative h-[100vh] w-dvw bg-[url(/assets/images/bg.png)] bg-center bg-cover flex flex-col gap-12 py-10`}>
-                <hgroup class={`text-center font-alpino font-black text-white`}>
+                <hgroup class={`fade-in text-center font-alpino font-black text-white`}>
                     <h1 class={`text-8xl`}>VOTE</h1>
                     <div class={`text-4xl -mt-2 tracking-tight leading-7`}>
                         <p>for the theme of</p>
@@ -175,15 +162,15 @@
                 <div class={`text-white w-full flex flex-col gap-4`}>
                     <span class={`w-full flex`}>
                         <span class={`flex-grow`}></span>
-                        <img class={`w-[65%] aspect-auto slide-from-right`} src={`/assets/images/girl.png`} alt={`Ramona Flowers`}/>
+                        <img class={`w-[65%] aspect-auto fade-in`} src={`/assets/images/girl.png`} alt={`Ramona Flowers`}/>
                     </span>
                     <span>
-                        <img class={`w-[65%] aspect-auto slide-from-left`} src={`/assets/images/scott.png`} alt={`Scott Pilgrim`}/>
+                        <img class={`w-[65%] aspect-auto fade-in`} src={`/assets/images/scott.png`} alt={`Scott Pilgrim`}/>
                         <span class={`flex-grow`}></span>
                     </span>
                 </div>
 
-                <img class={`absolute bottom-0 left-0 t/ranslate-y-[50%]`} src={`/assets/images/stars.png`} alt={`star margin`}/>
+                <img class={`absolute fade-in bottom-0 left-0 t/ranslate-y-[50%]`} src={`/assets/images/stars.png`} alt={`star margin`}/>
             </div>
 
             <div class={`relative h-[100vh] w-dvw bg-gradient-to-b from-[#212139] to-neutral-950 flex flex-col pt-24 gap-12`}>
@@ -213,12 +200,13 @@
 
                 <div class={`absolute top-0 left-0 z-10 h-[100vh] w-dvw bg-[url(/assets/images/starbg.png)] bg-cover bg-center`}></div>
             </div>
-        
-            
+
+
     </main>
 {:else}
-    <main>
-        Desktop TODO
+    <main class={`h-screen w-screen flex flex-col justify-center items-center text-5xl text-white`}>
+        <p>This website was made in 2 hours</p>
+        <p>Please use your mobile</p>
     </main>
 {/if}
 {/if}
@@ -241,7 +229,7 @@
             <p class={`text-xl leading-5`}>Are you sure you want to vote for <span class={`font-bold`}>{selectedMovie?.name}</span>?</p>
             <p class={`text-sm text-gray-500 leading-4 tracking-tighter`}>*This action cannot be undone and you can only vote once.</p>
         </hgroup>
-        
+
         <div class={`w-[90%] grid grid-cols-2 gap-2`}>
             <button
                 onclick={() => handleVote()}
@@ -264,31 +252,17 @@
 </svelte:head>
 
 <style>
-    .slide-from-left {
-        animation: slideFromLeft 1000ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        transform: translateX(-100vw);
+    .fade-in {
+        animation: fadeIn 1000ms ease-in-out forwards;
+        opacity: 0;
     }
 
-    .slide-from-right {
-        animation: slideFromRight 1000ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        transform: translateX(100vw);
-    }
-
-    @keyframes slideFromLeft {
+    @keyframes fadeIn {
         0% {
-            transform: translateX(-100vw);
+            opacity: 0;
         }
         100% {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes slideFromRight {
-        0% {
-            transform: translateX(100vw);
-        }
-        100% {
-            transform: translateX(0);
+            opacity: 1;
         }
     }
 </style>
